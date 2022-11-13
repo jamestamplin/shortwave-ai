@@ -1,57 +1,61 @@
-//create elements
+//create elements to add to the page
 var div = document.createElement( 'div' );
 var btnForm = document.createElement( 'form' );
 var btn = document.createElement( 'input' );
 
+//WAIT 2.5 Seconds, then called the load function
+setTimeout(() => {  onLoad(); }, 2500);
 
-//append all elements
-window.onload = function() {
+//MAIN FUNCTION
+function onLoad() {
+
+  //check if we're composing a new email (is the editor present?)
   const composePage = document.getElementsByClassName("ql-editor")[0];
-  if (composePage)
-  {
-    document.body.appendChild( div );
-    div.appendChild( btnForm );
-    btnForm.appendChild( btn );
+
+  //if so, add the 'expand button'
+  if (composePage != undefined) {
+    addExpandButton();
   }
+
 }
 
-document.body.appendChild( div );
-div.appendChild( btnForm );
-btnForm.appendChild( btn );
+function addExpandButton () {
 
-//set attributes for div
-div.id = 'GPT3-Button';
-div.style.position = 'fixed';
-div.style.top = '10px';
-div.style.left = '100px';
-div.style.zIndex = '100';
+  //add elements to page
+  document.body.appendChild( div );
+  div.appendChild( btnForm );
+  btnForm.appendChild( btn );
 
-//set attributes for btnForm
-btnForm.action = '';
+  //set attributes for div
+  div.id = 'GPT3-Button';
+  div.style.position = 'fixed';
+  div.style.top = '10px';
+  div.style.left = '100px';
+  div.style.zIndex = '100';
+  
+  //set attributes for btnForm
+  btnForm.action = '';
 
-//set attributes for btn
-//"btn.removeAttribute( 'style' );
-btn.type = 'button';
-btn.value = 'Expand';
-btn.style.width = '100px';
-btn.style.height = '30px';
-btn.style.backgroundColor = '#669AAF';
-btn.style.paddingTop = '5px';
-btn.classList.add('bGkrbw');
-btn.classList.add('jBoOet');
-btn.classList.add('sc-186c5n9-0');
-btn.classList.add('sc-3p1kfs-8');
+  //set attributes for btn
+  btn.type = 'button';
+  btn.value = 'Expand';
+  btn.style.width = '100px';
+  btn.style.height = '30px';
+  btn.style.backgroundColor = '#669AAF';
+  btn.style.paddingTop = '5px';
+  btn.classList.add('bGkrbw');
+  btn.classList.add('jBoOet');
+  btn.classList.add('sc-186c5n9-0');
+  btn.classList.add('sc-3p1kfs-8');
 
-//btn.style.position = 'absolute';
-//btn.style.top = '50%';
-//btn.style.left = '50%';
-
+//add click event
 btn.addEventListener("click", (event) => {});
 
 btn.onclick = (event) => {
   const editorContent = document.getElementsByClassName("ql-editor")[0].textContent
   if (editorContent)
   {
+    alert(editorContent);
     /*
     alert(editorContent);
     const response = await fetch("/api/generate", {
@@ -66,12 +70,13 @@ btn.onclick = (event) => {
     */
   }
   else {
-    alert('no content');
+    document.getElementsByClassName("ql-editor")[0].textContent = "Sorry, you didn't give me anything to expand";
   }
 };
+}
 
 function setResult(expansionText) {
-  document.getElementsByClassName("ql-editor")[0].textContent = expansionText;
+//  document.getElementsByClassName("ql-editor")[0].textContent = expansionText;
 }
 
 /*
@@ -104,3 +109,4 @@ Explaination: Ilya has never told a lie in 33 years of being on planet earth. Wh
 Trait: ${bodyText}
 Explaination:`;
 }
+
